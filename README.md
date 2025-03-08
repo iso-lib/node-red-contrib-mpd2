@@ -4,11 +4,13 @@ This node is derived from the modified
 
 [node-red-contrib-mpd](https://flows.nodered.org/node/node-red-contrib-mpd)
 
-The original node was prone to connection interruptions when dragged, so the code has been enhanced for robustness. Additionally, an output object `songinfo` has been added, which outputs the information of the song that was playing when playback is stopped.
+The original node was prone to connection interruptions when dragged, so the code has been enhanced for robustness. Additionally, an output object `songinfo` has been added, which outputs the information of the song that was playing when playback is stopped，It is more convenient for automatic configuration after the specified song playback stops.
 
 
 
+![this node](https://github.com/iso-lib/node-red-contrib-mpd2/blob/main/icons/FS_2025-03-08_122525.png?raw=true)
 
+![original node](https://github.com/iso-lib/node-red-contrib-mpd2/blob/main/icons/FS_2025-03-08_122906.png?raw=true?raw=true)
 
 Two node-red nodes for controlling/querying one or multiple Music Player Daemon (MPD) servers.
 If you don't know what mpd or node-red is, have a look at: [mpd](http://www.musicpd.org/), [node-red](http://nodered.org/).
