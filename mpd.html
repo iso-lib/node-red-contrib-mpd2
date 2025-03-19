@@ -1,0 +1,128 @@
+<script type="text/javascript">
+    RED.nodes.registerType('mpd2', {
+        category: 'MPD',
+        color: '#D8BFD8',
+        defaults: {
+            name: { value: "" },
+            server: { value: "", type: "mpd2-server", required: true },
+            command: { value: "" }
+        },
+        inputs: 1,
+        outputs: 2,
+        icon: "music.png",
+        label: function() {
+            return this.name || "mpd";
+        },
+        paletteLabel: "mpd2"
+    });
+    
+    RED.nodes.registerType('mpd2-server', {
+        category: 'config',
+        defaults: {
+            name: { value: "My MPD Server" },
+            host: { value: "localhost", required: true },
+            port: { value: 6600, required: true, validate: RED.validators.number() },
+            password: { type: "password" }
+        },
+        label: function() {
+            return this.name || "MPD Server";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="mpd2">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-server"><i class="fa fa-server"></i> Server</label>
+        <input type="text" id="node-input-server">
+    </div>
+    <div class="form-row">
+        <label for="node-input-command"><i class="fa fa-terminal"></i> Command</label>
+        <input type="text" id="node-input-command" placeholder="status">
+    </div>
+</script>
+
+<script type="text/html" data-template-name="mpd2-server">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-host"><i class="fa fa-globe"></i> Host</label>
+        <input type="text" id="node-config-input-host" placeholder="localhost">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-port"><i class="fa fa-random"></i> Port</label>
+        <input type="text" id="node-config-input-port" placeholder="6600">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-password"><i class="fa fa-lock"></i> Password</label>
+        <input type="password" id="node-config-input-password">
+    </div>
+</script>
+
+
+<script type="text/html" data-help-name="mpd2">
+    <p>A node to control MPD (Music Player Daemon) servers.</p>
+    
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">string | object</span></dt>
+        <dd>If a string, it is treated as the command to execute. If an object, it should have the properties <code>command</code> and optionally <code>args</code>.</dd>
+        
+    </dl>
+    
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">object | string</span></dt>
+        <dd>The result of the MPD command, parsed based on the command type when possible.</dd>
+        
+        <dt>topic <span class="property-type">string</span></dt>
+        <dd>Will be 'result' for command responses, 'system' for MPD subsystem events, or 'connected' when a connection is established.</dd>
+    </dl>
+    
+    <h3>Details</h3>
+    <p>This node establishes a connection to an MPD server and allows you to send commands and receive responses.</p>
+    <p>When the connection to the MPD server is established, the node begins idling to listen for system events. These events will be output with <code>topic: 'system'</code>.</p>
+    <p>You can execute commands in several ways:</p>
+    <ul>
+        <li>Set a default command in the node configuration</li>
+        <li>Send a string as <code>msg.payload</code> (e.g., <code>"status"</code>)</li>
+    </ul>
+    
+    <h3>Common Commands</h3>
+    <ul>
+        <li><code>status</code> - Get the current status of the player</li>
+        <li><code>stats</code> - Get statistics about the database</li>
+        <li><code>currentsong</code> - Get information about the current song</li>
+        <li><code>play</code> - Start playing</li>
+        <li><code>stop</code> - Stop playing</li>
+        <li><code>pause</code> - Pause playback</li>
+        <li><code>next</code> - Play next song</li>
+        <li><code>previous</code> - Play previous song</li>
+        <li><code>playlistinfo</code> - Get information about the current playlist</li>
+        <li><code>add "uri"</code> - Add a song to the playlist</li>
+        <li><code>clear</code> - Clear the playlist</li>
+    </ul>
+    
+    <p>For a full list of commands, see the <a href="https://www.musicpd.org/doc/html/protocol.html" target="_blank">MPD Protocol Documentation</a>.</p>
+</script>
+
+<script type="text/html" data-help-name="mpd2-server">
+    <p>Configuration for an MPD server connection.</p>
+    
+    <h3>Properties</h3>
+    <dl class="message-properties">
+        <dt>Host <span class="property-type">string</span></dt>
+        <dd>The hostname or IP address of the MPD server. Defaults to localhost.</dd>
+        
+        <dt>Port <span class="property-type">number</span></dt>
+        <dd>The port number the MPD server is listening on. Defaults to 6600.</dd>
+        
+        <dt>Password <span class="property-type">string</span></dt>
+        <dd>Password for the MPD server, if required.</dd>
+    </dl>
+</script>

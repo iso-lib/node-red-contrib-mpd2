@@ -1,0 +1,40 @@
+{
+  "name": "node-red-contrib-mpd2",
+  "version": "1.0.9",
+  "description": "Node-RED nodes to interact with Music Player Daemon",
+  "main": "mpd.js",
+  "author": "iso-lib",
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "url": "git+https://github.com/iso-lib/node-red-contrib-mpd2.git"
+  },
+  "keywords": [
+    "mpd",
+    "mpd2",
+    "music",
+    "player",
+    "daemon",
+    "client",
+    "protocol",
+    "node-red"
+  ],
+  "dependencies": {
+    "mpd2": "^1.0.0"
+  },
+  "engines": {
+      "node": "*"
+  },
+  "homepage": "https://github.com/iso-lib/node-red-contrib-mpd2/blob/main/README.md",
+  "bugs": {
+    "url": "https://github.com/iso-lib/node-red-contrib-mpd2/issues"
+  },
+  "node-red": {
+    "version": ">=2.0.0",
+    "nodes": {
+      "mpd2-command": "mpd.js"
+    }
+  }
+}
